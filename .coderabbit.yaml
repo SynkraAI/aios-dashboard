@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# AIOX Dashboard CodeRabbit Configuration
+
+language: "en-US"
+tone_instructions: "Be professional, constructive, and focused on code quality."
+early_access: false
+
+reviews:
+  auto_review:
+    enabled: true
+    base_branches:
+      - main
+    drafts: false
+
+  request_changes_workflow: true
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+
+  path_instructions:
+    - path: "src/app/api/**"
+      instructions: |
+        API routes must use resolveProjectRoot() from @/lib/project-registry, never a local getProjectRoot().
+        Verify error handling returns proper HTTP status codes.
+        Check for path traversal vulnerabilities when resolving file paths.
+        Ensure async operations have try/catch.
+
+    - path: "src/lib/**"
+      instructions: |
+        Shared utilities are consumed by all API routes.
+        Verify backwards compatibility on any changes.
+        Check for proper input validation.
+        Ensure caching logic has proper TTL and invalidation.
+
+    - path: "src/components/**"
+      instructions: |
+        Components should use TypeScript interfaces for props.
+        Check for proper memo usage on heavy renders.
+        Verify accessibility attributes (aria-labels, roles).
+        Ensure Tailwind classes follow project conventions.
+
+    - path: "server/**"
+      instructions: |
+        Monitor server runs on Bun.
+        Verify WebSocket handling is robust (reconnection, cleanup).
+        Check SQLite queries for injection vulnerabilities.
+
+    - path: "**/*.ts"
+      instructions: |
+        No 'any' types — use proper typing or 'unknown' with guards.
+        Verify async/await patterns and no unhandled rejections.
+        Ensure absolute imports via @/ path alias.
+
+    - path: "**/*.tsx"
+      instructions: |
+        React components must be client components ('use client') when using hooks.
+        Check for proper error boundaries.
+        Verify loading states are handled.
+
+chat:
+  auto_reply: true
