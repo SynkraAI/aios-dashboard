@@ -3,6 +3,7 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { X, RefreshCw, ChevronDown, Terminal as TerminalIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { apiUrl } from '@/lib/api';
 import { useTerminalStore, type Terminal, type TerminalLine } from '@/stores/terminal-store';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -118,7 +119,7 @@ export function TerminalStream({ terminalId, onClose, className }: TerminalStrea
 
     setTerminalStatus(terminalId, 'connecting');
 
-    const url = `/api/logs?agent=${terminal.agentId}`;
+    const url = apiUrl(`/api/logs?agent=${terminal.agentId}`);
     const eventSource = new EventSource(url);
     eventSourceRef.current = eventSource;
 
@@ -261,7 +262,9 @@ export function TerminalStream({ terminalId, onClose, className }: TerminalStrea
       >
         {terminal.lines.length === 0 ? (
           <div className="text-muted-foreground">
-            Waiting for logs...
+            {terminal.status === 'error'
+              ? 'No log stream available. Check that the agent log file exists.'
+              : 'Waiting for logs...'}
           </div>
         ) : (
           terminal.lines.map((line) => (

@@ -1,14 +1,7 @@
 import { NextRequest } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
-
-// Get the project root path
-function getProjectRoot(): string {
-  if (process.env.AIOS_PROJECT_ROOT) {
-    return process.env.AIOS_PROJECT_ROOT;
-  }
-  return path.resolve(process.cwd(), '..', '..');
-}
+import { resolveProjectRoot } from '@/lib/project-registry';
 
 const BOB_STATUS_FILE_NAME = '.aios/dashboard/bob-status.json';
 const POLL_INTERVAL = 1000; // Poll every 1 second (per story spec)
@@ -27,7 +20,7 @@ function formatSSE(event: SSEEvent): string {
 }
 
 export async function GET(request: NextRequest) {
-  const projectRoot = getProjectRoot();
+  const projectRoot = await resolveProjectRoot();
   const statusFilePath = path.join(projectRoot, BOB_STATUS_FILE_NAME);
 
   const encoder = new TextEncoder();

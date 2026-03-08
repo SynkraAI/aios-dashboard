@@ -2,19 +2,10 @@ import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 import type { AiosStatus, AgentId } from '@/types';
+import { resolveProjectRoot } from '@/lib/project-registry';
 
 // Status file path relative to project root
 const STATUS_FILE_NAME = '.aios/dashboard/status.json';
-
-// Get the project root path
-// Priority: AIOS_PROJECT_ROOT env var > navigate from cwd
-function getProjectRoot(): string {
-  if (process.env.AIOS_PROJECT_ROOT) {
-    return process.env.AIOS_PROJECT_ROOT;
-  }
-  // Default: assume running from apps/dashboard/
-  return path.resolve(process.cwd(), '..', '..');
-}
 
 // Default response when CLI is not running
 const DISCONNECTED_STATUS: AiosStatus = {
@@ -129,7 +120,7 @@ function validateStatusFile(data: unknown): AiosStatus | null {
 export async function GET() {
   try {
     // Resolve status file path from project root
-    const statusFilePath = path.join(getProjectRoot(), STATUS_FILE_NAME);
+    const statusFilePath = path.join(await resolveProjectRoot(), STATUS_FILE_NAME);
 
     // Try to read the status file
     const fileContent = await fs.readFile(statusFilePath, 'utf-8');

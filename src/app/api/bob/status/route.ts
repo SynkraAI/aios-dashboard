@@ -1,17 +1,10 @@
 import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { resolveProjectRoot } from '@/lib/project-registry';
 
 // Bob status file path relative to project root
 const BOB_STATUS_FILE_NAME = '.aios/dashboard/bob-status.json';
-
-// Get the project root path
-function getProjectRoot(): string {
-  if (process.env.AIOS_PROJECT_ROOT) {
-    return process.env.AIOS_PROJECT_ROOT;
-  }
-  return path.resolve(process.cwd(), '..', '..');
-}
 
 // Default response when Bob is not running
 const BOB_INACTIVE_STATUS = {
@@ -21,7 +14,7 @@ const BOB_INACTIVE_STATUS = {
 
 export async function GET() {
   try {
-    const statusFilePath = path.join(getProjectRoot(), BOB_STATUS_FILE_NAME);
+    const statusFilePath = path.join(await resolveProjectRoot(), BOB_STATUS_FILE_NAME);
     const fileContent = await fs.readFile(statusFilePath, 'utf-8');
 
     let data: unknown;

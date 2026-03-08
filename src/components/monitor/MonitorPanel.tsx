@@ -15,9 +15,10 @@ interface MonitorPanelProps {
 
 export const MonitorPanel = memo(function MonitorPanel({ className }: MonitorPanelProps) {
   // Initialize WebSocket connection
-  useMonitorEvents();
+  const { reconnect } = useMonitorEvents();
 
   const connected = useMonitorStore((state) => state.connected);
+  const error = useMonitorStore((state) => state.error);
   const stats = useMonitorStore((state) => state.stats);
   const clearEvents = useMonitorStore((state) => state.clearEvents);
 
@@ -66,6 +67,37 @@ export const MonitorPanel = memo(function MonitorPanel({ className }: MonitorPan
       {connected && (
         <div className="px-4 py-2 border-b" style={{ borderColor: 'var(--border-subtle)' }}>
           <CurrentToolIndicator />
+        </div>
+      )}
+
+      {/* Offline Banner */}
+      {!connected && error && (
+        <div
+          className="mx-4 mt-3 rounded-md border px-4 py-3"
+          style={{
+            borderColor: 'var(--border-subtle)',
+            backgroundColor: 'var(--bg-elevated)',
+          }}
+        >
+          <p className="text-sm text-text-muted mb-1">
+            Monitor Offline
+          </p>
+          <p className="text-detail text-text-muted">
+            Connect monitor-server for real-time events. Run:{' '}
+            <code
+              className="rounded px-1.5 py-0.5 text-detail"
+              style={{ backgroundColor: 'var(--bg-base)' }}
+            >
+              aiox monitor start
+            </code>
+          </p>
+          <button
+            onClick={reconnect}
+            className="mt-2 flex items-center gap-1.5 text-detail text-gold hover:opacity-80 transition-opacity"
+          >
+            <RefreshIcon className="h-3 w-3" />
+            Reconnect
+          </button>
         </div>
       )}
 

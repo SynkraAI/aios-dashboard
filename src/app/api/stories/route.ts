@@ -11,15 +11,7 @@ import type {
   StoryType,
   AgentId,
 } from '@/types';
-
-// Get the project root path
-function getProjectRoot(): string {
-  if (process.env.AIOS_PROJECT_ROOT) {
-    return process.env.AIOS_PROJECT_ROOT;
-  }
-  // Default: assume running from apps/dashboard/
-  return path.resolve(process.cwd(), '..', '..');
-}
+import { resolveProjectRoot } from '@/lib/project-registry';
 
 // Valid values for type checking
 const VALID_STATUS: StoryStatus[] = [
@@ -565,7 +557,7 @@ interface CreateStoryRequest {
 
 export async function GET() {
   try {
-    const projectRoot = getProjectRoot();
+    const projectRoot = await resolveProjectRoot();
     const storiesDir = path.join(projectRoot, 'docs', 'stories');
 
     // Find all markdown files
@@ -646,7 +638,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Title is required' }, { status: 400 });
     }
 
-    const projectRoot = getProjectRoot();
+    const projectRoot = await resolveProjectRoot();
     const storiesDir = path.join(projectRoot, 'docs', 'stories');
 
     // Ensure stories directory exists

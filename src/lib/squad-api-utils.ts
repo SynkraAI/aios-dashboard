@@ -1,6 +1,17 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
+export { resolveProjectRoot } from '@/lib/project-registry';
+
+// Synchronous fallback — used by squad routes that call getProjectRoot() without await.
+// New code should prefer the async resolveProjectRoot() from project-registry.
+export function getProjectRoot(): string {
+  if (process.env.AIOS_PROJECT_ROOT) {
+    return process.env.AIOS_PROJECT_ROOT;
+  }
+  return path.resolve(process.cwd(), '..', '..');
+}
+
 export const VALID_SQUAD_SECTIONS = [
   'agents',
   'tasks',
@@ -22,13 +33,6 @@ const SECTION_ALLOWED_EXTENSIONS: Record<SquadSectionName, ReadonlySet<string>> 
 };
 
 const SECTION_EXCLUDED_FILE_NAMES = new Set(['readme.md', 'template.md', '_template.md']);
-
-export function getProjectRoot(): string {
-  if (process.env.AIOS_PROJECT_ROOT) {
-    return process.env.AIOS_PROJECT_ROOT;
-  }
-  return path.resolve(process.cwd(), '..', '..');
-}
 
 export function formatName(name: string): string {
   return name

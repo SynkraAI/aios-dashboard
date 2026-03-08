@@ -6,6 +6,7 @@ import { BobPipelinePanel } from '@/components/bob/BobPipelinePanel';
 import { BobAgentActivity } from '@/components/bob/BobAgentActivity';
 import { BobSurfaceAlert } from '@/components/bob/BobSurfaceAlert';
 import { cn } from '@/lib/utils';
+import { apiUrl } from '@/lib/api';
 import { Bot, AlertCircle, XCircle } from 'lucide-react';
 import type { BobError } from '@/stores/bob-store';
 
@@ -25,7 +26,7 @@ export const BobOrchestrationView = memo(function BobOrchestrationView() {
   useEffect(() => {
     async function fetchStatus() {
       try {
-        const res = await fetch('/api/bob/status');
+        const res = await fetch(apiUrl('/api/bob/status'));
         if (res.ok) {
           const data = await res.json();
           updateFromStatus(data);
@@ -50,7 +51,7 @@ export const BobOrchestrationView = memo(function BobOrchestrationView() {
 
   // SSE for real-time events
   useEffect(() => {
-    const eventSource = new EventSource('/api/bob/events');
+    const eventSource = new EventSource(apiUrl('/api/bob/events'));
     eventSourceRef.current = eventSource;
 
     eventSource.addEventListener('bob:status', (e) => {

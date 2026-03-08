@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import type { Components } from 'react-markdown';
+import { Mermaid } from '@/components/mermaidcn/mermaid';
 
 interface MarkdownRendererProps {
   content: string;
@@ -62,6 +63,17 @@ const components: Components = {
   ),
   code: ({ className, children }) => {
     const isBlock = className?.includes('language-');
+    // Render Mermaid code blocks as diagrams
+    if (className === 'language-mermaid') {
+      const chartText = String(children).replace(/\n$/, '');
+      return (
+        <Mermaid
+          chart={chartText}
+          config={{ theme: 'dark', darkMode: true }}
+          className="my-4"
+        />
+      );
+    }
     if (isBlock) {
       return (
         <code className={`${className} font-mono`}>
@@ -75,11 +87,18 @@ const components: Components = {
       </code>
     );
   },
-  pre: ({ children }) => (
-    <pre className="bg-bg-tertiary border border-border p-3 mb-3 overflow-x-auto font-mono text-detail leading-relaxed">
-      {children}
-    </pre>
-  ),
+  pre: ({ children }) => {
+    // If the child is a Mermaid diagram (already rendered by code component), don't wrap in pre
+    const child = children as React.ReactElement<{ className?: string }>;
+    if (child?.props?.className === 'language-mermaid') {
+      return <>{children}</>;
+    }
+    return (
+      <pre className="bg-bg-tertiary border border-border p-3 mb-3 overflow-x-auto font-mono text-detail leading-relaxed">
+        {children}
+      </pre>
+    );
+  },
   table: ({ children }) => (
     <div className="overflow-x-auto mb-3">
       <table className="border-collapse w-full text-detail">

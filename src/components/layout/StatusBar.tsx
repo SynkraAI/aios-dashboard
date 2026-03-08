@@ -2,10 +2,12 @@
 
 import { useAiosStatus } from '@/hooks/use-aios-status';
 import { useBobStore } from '@/stores/bob-store';
+import { useMonitorStore } from '@/stores/monitor-store';
 import { AGENT_CONFIG, type AgentId } from '@/types';
 import { cn } from '@/lib/utils';
-import { Bell, Bot } from 'lucide-react';
+import { Bell, Bot, Wifi, Radio } from 'lucide-react';
 import { iconMap } from '@/lib/icons';
+import { useState } from 'react';
 
 interface StatusBarProps {
   className?: string;
@@ -37,6 +39,11 @@ export function StatusBar({ className }: StatusBarProps) {
         <span className="text-muted-foreground">
           Claude: <span className="text-foreground">{isConnected ? 'Ready' : 'Offline'}</span>
         </span>
+      </div>
+
+      {/* Center section — Connection indicators */}
+      <div className="flex items-center gap-3">
+        <ConnectionIndicators />
       </div>
 
       {/* Right section */}
@@ -161,6 +168,60 @@ function BobStatusIndicator() {
         Bob: <span style={{ color }}>{label}</span>
       </span>
     </div>
+  );
+}
+
+function ConnectionIndicators() {
+  const monitorConnected = useMonitorStore((s) => s.connected);
+  const monitorEvents = useMonitorStore((s) => s.events);
+  const { isConnected: sseConnected } = useAiosStatus();
+  const bobActive = useBobStore((s) => s.active);
+  const [showEventCount, setShowEventCount] = useState(false);
+
+  return (
+    <>
+      {/* WebSocket (Monitor) indicator */}
+      <div
+        className="flex items-center gap-1 cursor-pointer"
+        title={`Monitor WebSocket: ${monitorConnected ? 'Connected' : 'Disconnected'}\nURL: ws://localhost:4001/stream\nEvents: ${monitorEvents.length}`}
+        onClick={() => setShowEventCount(!showEventCount)}
+      >
+        <Wifi className="h-3 w-3" style={{ color: monitorConnected ? '#22c55e' : '#ef4444' }} />
+        <span
+          className="h-1.5 w-1.5 rounded-full"
+          style={{ backgroundColor: monitorConnected ? '#22c55e' : '#ef4444' }}
+        />
+        {showEventCount && monitorConnected && (
+          <span className="text-detail text-muted-foreground">{monitorEvents.length}</span>
+        )}
+      </div>
+
+      {/* SSE (Status) indicator */}
+      <div
+        className="flex items-center gap-1"
+        title={`Status SSE: ${sseConnected ? 'Connected' : 'Disconnected'}\nURL: /api/events`}
+      >
+        <Radio className="h-3 w-3" style={{ color: sseConnected ? '#22c55e' : '#ef4444' }} />
+        <span
+          className="h-1.5 w-1.5 rounded-full"
+          style={{ backgroundColor: sseConnected ? '#22c55e' : '#ef4444' }}
+        />
+      </div>
+
+      {/* SSE (Bob) indicator */}
+      {bobActive && (
+        <div
+          className="flex items-center gap-1"
+          title={`Bob SSE: Connected\nURL: /api/bob/events`}
+        >
+          <Bot className="h-3 w-3" style={{ color: '#22c55e' }} />
+          <span
+            className="h-1.5 w-1.5 rounded-full"
+            style={{ backgroundColor: '#22c55e' }}
+          />
+        </div>
+      )}
+    </>
   );
 }
 

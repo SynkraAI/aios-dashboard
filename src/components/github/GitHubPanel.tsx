@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useSettingsStore } from '@/stores/settings-store';
+import { apiUrl } from '@/lib/api';
 import { MOCK_PULL_REQUESTS, MOCK_ISSUES } from '@/lib/mock-data';
 
 interface GitHubIssue {
@@ -88,7 +89,7 @@ export function GitHubPanel() {
   const useMockData = settings.useMockData;
 
   const { data: apiData, error, isLoading, mutate } = useSWR<GitHubData>(
-    useMockData ? null : '/api/github',
+    useMockData ? null : apiUrl('/api/github'),
     fetcher,
     {
       refreshInterval: 60000,

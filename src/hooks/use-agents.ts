@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useAgentStore } from '@/stores/agent-store';
 import { useSettingsStore } from '@/stores/settings-store';
 import { MOCK_AGENTS } from '@/lib/mock-data';
+import { apiUrl } from '@/lib/api';
 import type { AiosStatus, AgentId } from '@/types';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -27,7 +28,7 @@ export function useAgents() {
 
   // Poll the status endpoint (disabled when using mock data)
   const { data, error, isLoading, mutate } = useSWR<AiosStatus>(
-    useMockData ? null : '/api/status',
+    useMockData ? null : apiUrl('/api/status'),
     fetcher,
     {
       refreshInterval: pollingInterval,

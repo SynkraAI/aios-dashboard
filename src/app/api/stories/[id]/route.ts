@@ -3,14 +3,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import type { Story, StoryStatus, StoryComplexity, StoryPriority, StoryCategory, AgentId } from '@/types';
-
-// Get the project root path
-function getProjectRoot(): string {
-  if (process.env.AIOS_PROJECT_ROOT) {
-    return process.env.AIOS_PROJECT_ROOT;
-  }
-  return path.resolve(process.cwd(), '..', '..');
-}
+import { resolveProjectRoot } from '@/lib/project-registry';
 
 // Valid values for type checking
 const VALID_STATUS: StoryStatus[] = [
@@ -56,11 +49,11 @@ async function findStoryFile(dir: string, storyId: string): Promise<string | nul
 function parseStoryFromFile(
   content: string,
   filePath: string,
-  stats: { mtime: Date; birthtime: Date }
+  stats: { mtime: Date; birthtime: Date },
+  projectRoot: string
 ): Story | null {
   try {
     const { data, content: markdownContent } = matter(content);
-    const projectRoot = getProjectRoot();
 
     // Extract title
     let title = data.title;
@@ -159,7 +152,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const projectRoot = getProjectRoot();
+    const projectRoot = await resolveProjectRoot();
     const storiesDir = path.join(projectRoot, 'docs', 'stories');
 
     const filePath = await findStoryFile(storiesDir, id);
@@ -173,10 +166,7 @@ export async function GET(
 
     const content = await fs.readFile(filePath, 'utf-8');
     const stats = await fs.stat(filePath);
-    const story = parseStoryFromFile(content, filePath, {
-      mtime: stats.mtime,
-      birthtime: stats.birthtime,
-    });
+    const story = parseStoryFromFile(content, filePath, stats, projectRoot);
 
     if (!story) {
       return NextResponse.json(
@@ -205,7 +195,7 @@ export async function PUT(
     const { id } = await params;
     const body = await request.json() as UpdateStoryRequest;
 
-    const projectRoot = getProjectRoot();
+    const projectRoot = await resolveProjectRoot();
     const storiesDir = path.join(projectRoot, 'docs', 'stories');
 
     const filePath = await findStoryFile(storiesDir, id);
@@ -299,7 +289,7 @@ export async function PUT(
     const story = parseStoryFromFile(updatedContent, filePath, {
       mtime: stats.mtime,
       birthtime: stats.birthtime,
-    });
+    }, projectRoot);
 
     return NextResponse.json({
       story,
@@ -322,7 +312,7 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const projectRoot = getProjectRoot();
+    const projectRoot = await resolveProjectRoot();
     const storiesDir = path.join(projectRoot, 'docs', 'stories');
 
     const filePath = await findStoryFile(storiesDir, id);

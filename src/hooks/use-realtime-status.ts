@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { apiUrl } from '@/lib/api';
 import type { AiosStatus } from '@/types';
 
 // Event types from SSE
@@ -82,7 +83,7 @@ export function useRealtimeStatus(
 
     const poll = async () => {
       try {
-        const res = await fetch('/api/status');
+        const res = await fetch(apiUrl('/api/status'));
         if (res.ok) {
           const data = await res.json();
           setStatus(data);
@@ -109,7 +110,7 @@ export function useRealtimeStatus(
     cleanup();
 
     try {
-      const eventSource = new EventSource('/api/events');
+      const eventSource = new EventSource(apiUrl('/api/events'));
       eventSourceRef.current = eventSource;
 
       eventSource.onopen = () => {

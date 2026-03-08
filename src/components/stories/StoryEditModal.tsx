@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { apiUrl } from '@/lib/api';
 import {
   AGENT_CONFIG,
   type AgentId,
@@ -134,7 +135,7 @@ export function StoryEditModal({
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`/api/stories/${story.id}`, {
+      const response = await fetch(apiUrl(`/api/stories/${story.id}`), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -177,7 +178,7 @@ export function StoryEditModal({
     setError(null);
 
     try {
-      const response = await fetch(`/api/stories/${story.id}`, {
+      const response = await fetch(apiUrl(`/api/stories/${story.id}`), {
         method: 'DELETE',
       });
 

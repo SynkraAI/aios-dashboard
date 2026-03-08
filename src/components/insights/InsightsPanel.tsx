@@ -1,9 +1,11 @@
 'use client';
 
-import { TrendingUp, TrendingDown, Clock, AlertTriangle, CheckCircle2, Activity } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { TrendingUp, TrendingDown, Clock, AlertTriangle, CheckCircle2, Activity, RefreshCw, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { apiUrl } from '@/lib/api';
 import { useSettingsStore } from '@/stores/settings-store';
-import { MOCK_INSIGHTS } from '@/lib/mock-data';
+import { MOCK_INSIGHTS, type InsightsMetrics } from '@/lib/mock-data';
 import { Badge } from '@/components/ui/badge';
 import { AGENT_CONFIG, type AgentId } from '@/types';
 import { iconMap } from '@/lib/icons';
@@ -72,16 +74,54 @@ function BarChart({ data, maxValue }: { data: { label: string; value: number; co
 
 export function InsightsPanel() {
   const { settings } = useSettingsStore();
-  const data = settings.useMockData ? MOCK_INSIGHTS : null;
+  const useMockData = settings.useMockData;
+  const [data, setData] = useState<InsightsMetrics | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-  if (!settings.useMockData || !data) {
+  const fetchInsights = useCallback(async () => {
+    setLoading(true);
+    try {
+      if (useMockData) {
+        await new Promise(resolve => setTimeout(resolve, 200));
+        setData(MOCK_INSIGHTS);
+      } else {
+        const res = await fetch(apiUrl('/api/insights'));
+        if (res.ok) {
+          const json = await res.json();
+          setData(json);
+        }
+      }
+      setLastUpdated(new Date());
+    } catch (error) {
+      console.error('Failed to fetch insights:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [useMockData]);
+
+  useEffect(() => {
+    fetchInsights();
+    const interval = setInterval(fetchInsights, 30000);
+    return () => clearInterval(interval);
+  }, [fetchInsights]);
+
+  if (loading && !data) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <Loader2 className="h-8 w-8 text-muted-foreground animate-spin" />
+      </div>
+    );
+  }
+
+  if (!data) {
     return (
       <div className="flex h-full items-center justify-center">
         <div className="text-center">
           <Activity className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <p className="text-lg font-medium text-foreground">No Insights Available</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Enable Demo Mode in Settings to see sample analytics
+            No story data found to compute insights
           </p>
         </div>
       </div>
@@ -99,6 +139,9 @@ export function InsightsPanel() {
           <h2 className="text-lg font-semibold">Insights</h2>
           <Badge variant="outline" className="text-xs">This Week</Badge>
         </div>
+        <button onClick={fetchInsights} disabled={loading} className="p-1.5 rounded-md hover:bg-muted transition-colors">
+          <RefreshCw className={cn('h-4 w-4 text-muted-foreground', loading && 'animate-spin')} />
+        </button>
       </div>
 
       {/* Content */}
@@ -240,10 +283,10 @@ export function InsightsPanel() {
       {/* Footer */}
       <div className="flex items-center justify-between px-4 py-2 border-t border-border bg-muted/30">
         <span className="text-xs text-muted-foreground">
-          {settings.useMockData ? 'Showing mock analytics' : 'Real-time data'}
+          {useMockData ? 'Demo Mode' : 'Live story data'}
         </span>
         <span className="text-xs text-muted-foreground">
-          Last updated: {new Date().toLocaleTimeString()}
+          {lastUpdated ? `Updated ${lastUpdated.toLocaleTimeString()}` : ''}
         </span>
       </div>
     </div>

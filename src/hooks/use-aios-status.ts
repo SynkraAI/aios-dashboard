@@ -1,4 +1,5 @@
 import useSWR from 'swr';
+import { apiUrl } from '@/lib/api';
 import type { AiosStatus } from '@/types';
 
 // Extended response type that includes optional error field
@@ -46,7 +47,7 @@ export function useAiosStatus(
   const { interval = 5000, paused = false } = options;
 
   const { data, error, isLoading, mutate } = useSWR<AiosStatusResponse>(
-    paused ? null : '/api/status',
+    paused ? null : apiUrl('/api/status'),
     fetcher,
     {
       refreshInterval: interval,
