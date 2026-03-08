@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 import { iconMap } from '@/lib/icons';
 import { RoadmapCard } from './RoadmapCard';
+import { apiUrl } from '@/lib/api';
 import { useSettingsStore } from '@/stores/settings-store';
 import { MOCK_ROADMAP_ITEMS } from '@/lib/mock-data';
 import { ROADMAP_PRIORITY_CONFIG, type RoadmapItem, type RoadmapPriority } from '@/types';
@@ -16,10 +17,33 @@ interface RoadmapViewProps {
 
 export function RoadmapView({ className }: RoadmapViewProps) {
   const { settings } = useSettingsStore();
+  const useMockData = settings.useMockData;
   const [filterMode, setFilterMode] = useState<FilterMode>('all');
+  const [items, setItems] = useState<RoadmapItem[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // In a real app, this would come from a roadmap store
-  const items: RoadmapItem[] = settings.useMockData ? MOCK_ROADMAP_ITEMS : [];
+  const fetchRoadmap = useCallback(async () => {
+    setLoading(true);
+    try {
+      if (useMockData) {
+        setItems(MOCK_ROADMAP_ITEMS);
+      } else {
+        const res = await fetch(apiUrl('/api/roadmap'));
+        if (res.ok) {
+          const json = await res.json();
+          setItems(json.items || []);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch roadmap:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [useMockData]);
+
+  useEffect(() => {
+    fetchRoadmap();
+  }, [fetchRoadmap]);
 
   const MapIcon = iconMap['map'];
   const PlusIcon = iconMap['plus'];
@@ -47,13 +71,13 @@ export function RoadmapView({ className }: RoadmapViewProps) {
     { id: 'impact', label: 'Impact' },
   ];
 
-  if (!settings.useMockData || items.length === 0) {
+  if (items.length === 0 && !loading) {
     return (
       <div className="h-full flex flex-col items-center justify-center p-8 text-center" style={{ backgroundColor: 'var(--bg-base)' }}>
         <MapIcon className="h-8 w-8 mb-4 text-border" />
         <h3 className="text-sm font-light mb-1 text-text-tertiary">No Roadmap Items</h3>
         <p className="text-label mb-4 text-text-muted">
-          Enable Demo Mode in Settings to see sample roadmap.
+          Add a roadmap file at docs/roadmap.md or enable Demo Mode.
         </p>
         <button
           className="flex items-center gap-1.5 px-3 py-1.5 text-label border transition-luxury hover:opacity-80 text-text-secondary"
@@ -148,7 +172,7 @@ export function RoadmapView({ className }: RoadmapViewProps) {
       {/* Footer */}
       <div className="flex items-center justify-between px-4 py-2 border-t" style={{ borderColor: 'var(--border-subtle)', backgroundColor: 'var(--bg-elevated)' }}>
         <span className="text-detail text-text-muted">
-          {settings.useMockData ? 'Demo Mode' : 'Connected to AIOS'}
+          {useMockData ? 'Demo Mode' : 'Live roadmap data'}
         </span>
         <div className="flex items-center gap-4 text-detail">
           <span className="flex items-center gap-1.5">

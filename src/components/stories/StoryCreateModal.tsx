@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { apiUrl } from '@/lib/api';
 import {
   AGENT_CONFIG,
   type AgentId,
@@ -117,7 +118,7 @@ export function StoryCreateModal({
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/stories', {
+      const response = await fetch(apiUrl('/api/stories'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

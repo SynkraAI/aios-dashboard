@@ -199,6 +199,7 @@ export interface Squad {
 
 export type SidebarView =
   | 'kanban'
+  | 'backlog'
   | 'agents'
   | 'bob'
   | 'terminals'
@@ -210,6 +211,9 @@ export type SidebarView =
   | 'github'
   | 'worktrees'
   | 'squads'
+  | 'prds'
+  | 'plans'
+  | 'qa'
   | 'settings';
 
 export interface SidebarItem {
@@ -263,6 +267,7 @@ export const AGENT_CONFIG: Record<AgentId, AgentConfig> = {
 
 export const SIDEBAR_ITEMS: SidebarItem[] = [
   { id: 'kanban', label: 'Kanban', icon: 'kanban', href: '/kanban', shortcut: 'K' },
+  { id: 'backlog', label: 'Backlog', icon: 'layers', href: '/backlog', shortcut: 'L' },
   { id: 'agents', label: 'Agents', icon: 'bot', href: '/agents', shortcut: 'A' },
   { id: 'bob', label: 'Bob', icon: 'bot', href: '/bob', shortcut: 'B' },
   { id: 'terminals', label: 'Terminals', icon: 'terminal', href: '/terminals', shortcut: 'T' },
@@ -272,6 +277,9 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   { id: 'roadmap', label: 'Roadmap', icon: 'map', href: '/roadmap', shortcut: 'R' },
   { id: 'squads', label: 'Squads', icon: 'network', href: '/squads', shortcut: 'Q' },
   { id: 'github', label: 'GitHub', icon: 'github', href: '/github', shortcut: 'G' },
+  { id: 'prds', label: 'PRDs', icon: 'file-text', href: '/prds', shortcut: 'P' },
+  { id: 'plans', label: 'Plans', icon: 'target', href: '/plans' },
+  { id: 'qa', label: 'QA Metrics', icon: 'shield', href: '/qa' },
   { id: 'settings', label: 'Settings', icon: 'settings', href: '/settings', shortcut: 'S' },
 ];
 

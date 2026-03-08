@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import { useEffect } from 'react';
 import { useSquadStore } from '@/stores/squad-store';
+import { apiUrl } from '@/lib/api';
 import type { Squad, SquadConnection, SquadTier } from '@/types';
 
 const fetcher = (url: string) =>
@@ -33,7 +34,7 @@ interface SquadDetailResponse {
 
 export function useSquads() {
   const { data, error, isLoading, mutate } = useSWR<SquadsResponse>(
-    '/api/squads',
+    apiUrl('/api/squads'),
     fetcher,
     { revalidateOnFocus: false }
   );
@@ -63,7 +64,7 @@ export function useSquads() {
 
 export function useSquadDetail(name: string | null) {
   const { data, error, isLoading } = useSWR<SquadDetailResponse>(
-    name ? `/api/squads/${name}` : null,
+    name ? apiUrl(`/api/squads/${name}`) : null,
     fetcher,
     { revalidateOnFocus: false }
   );
@@ -124,7 +125,7 @@ interface SectionItemsResponse {
 
 export function useSquadSectionItems(squadName: string | null, section: string | null) {
   const { data, error, isLoading } = useSWR<SectionItemsResponse>(
-    squadName && section ? `/api/squads/${squadName}/sections/${section}` : null,
+    squadName && section ? apiUrl(`/api/squads/${squadName}/sections/${section}`) : null,
     fetcher,
     { revalidateOnFocus: false }
   );
@@ -145,7 +146,7 @@ export interface ItemContent {
 
 export function useSquadItemContent(squadName: string | null, section: string | null, slug: string | null) {
   const { data, error, isLoading } = useSWR<ItemContent>(
-    squadName && section && slug ? `/api/squads/${squadName}/sections/${section}/${slug}` : null,
+    squadName && section && slug ? apiUrl(`/api/squads/${squadName}/sections/${section}/${slug}`) : null,
     fetcher,
     { revalidateOnFocus: false }
   );
@@ -159,7 +160,7 @@ export function useSquadItemContent(squadName: string | null, section: string | 
 
 export function useSquadAgentDetail(squadName: string | null, agentId: string | null) {
   const { data, error, isLoading } = useSWR<AgentDetailResponse>(
-    squadName && agentId ? `/api/squads/${squadName}/agents/${agentId}` : null,
+    squadName && agentId ? apiUrl(`/api/squads/${squadName}/agents/${agentId}`) : null,
     fetcher,
     { revalidateOnFocus: false }
   );

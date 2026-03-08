@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import { useStoryStore } from '@/stores/story-store';
 import { useSettingsStore } from '@/stores/settings-store';
 import { MOCK_STORIES } from '@/lib/mock-data';
+import { apiUrl } from '@/lib/api';
 import type { Story } from '@/types';
 
 interface StoriesResponse {
@@ -49,7 +50,7 @@ export function useStories(options: UseStoriesOptions = {}): UseStoriesReturn {
 
   // SWR for API fetch (disabled when using mock data)
   const { data, error, isLoading, mutate } = useSWR<StoriesResponse>(
-    useMockData ? null : '/api/stories', // null key disables fetching
+    useMockData ? null : apiUrl('/api/stories'), // null key disables fetching
     fetcher,
     {
       refreshInterval: refreshInterval > 0 ? refreshInterval : undefined,

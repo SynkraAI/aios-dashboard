@@ -3,6 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
 
+// Force dynamic rendering — prevents Next.js from caching HTML pages
+// with s-maxage=31536000, which causes stale chunk 404s after rebuilds
+export const dynamic = 'force-dynamic';
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

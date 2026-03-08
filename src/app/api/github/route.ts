@@ -1,6 +1,7 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
+import { resolveProjectRoot } from '@/lib/project-registry';
 
 const execFileAsync = promisify(execFile);
 
@@ -25,8 +26,10 @@ interface GitHubPR {
   isDraft: boolean;
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const projectRoot = await resolveProjectRoot(request);
+
     // Check if gh CLI is authenticated
     try {
       await execFileAsync('gh', ['auth', 'status']);
@@ -40,7 +43,8 @@ export async function GET() {
       );
     }
 
-    // Fetch issues and PRs in parallel
+    // Fetch issues and PRs in parallel, scoped to the project directory
+    const execOpts = { cwd: projectRoot };
     const [issuesResult, prsResult] = await Promise.allSettled([
       execFileAsync('gh', [
         'issue',
@@ -49,7 +53,7 @@ export async function GET() {
         'number,title,state,labels,url,createdAt,author',
         '--limit',
         '15',
-      ]),
+      ], execOpts),
       execFileAsync('gh', [
         'pr',
         'list',
@@ -57,7 +61,7 @@ export async function GET() {
         'number,title,state,url,createdAt,author,headRefName,isDraft',
         '--limit',
         '15',
-      ]),
+      ], execOpts),
     ]);
 
     const issues: GitHubIssue[] =
@@ -74,7 +78,7 @@ export async function GET() {
         'view',
         '--json',
         'name,owner,url',
-      ]);
+      ], execOpts);
       repoInfo = JSON.parse(repoJson);
     } catch {
       // Ignore repo info errors
@@ -87,7 +91,6 @@ export async function GET() {
       updatedAt: new Date().toISOString(),
     });
   } catch (error) {
-    // eslint-disable-next-line no-undef
     console.error('GitHub API error:', error);
     return NextResponse.json(
       {

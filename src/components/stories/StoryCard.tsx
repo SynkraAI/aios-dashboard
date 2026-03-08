@@ -6,7 +6,7 @@ import { iconMap } from '@/lib/icons';
 import { ProgressBar } from '@/components/ui/progress-bar';
 import { useBobStore } from '@/stores/bob-store';
 import { AGENT_CONFIG, type Story, type StoryComplexity, type AgentId } from '@/types';
-import { Bot } from 'lucide-react';
+import { Bot, Layers } from 'lucide-react';
 
 // ============ Props ============
 
@@ -27,7 +27,8 @@ export const StoryCard = memo(function StoryCard({
   onClick,
   className,
 }: StoryCardProps) {
-  const { title, description, category, complexity, agentId, progress } = story;
+  const { title, description, category, complexity, agentId, progress, type: storyType } = story;
+  const isEpic = storyType === 'epic';
   const bobActive = useBobStore((s) => s.active);
   const bobPipeline = useBobStore((s) => s.pipeline);
   const isBobOrchestrated = bobActive && bobPipeline?.story_progress && story.id;
@@ -40,24 +41,40 @@ export const StoryCard = memo(function StoryCard({
         'bg-card border-border',
         'cursor-pointer transition-luxury hover-lift',
         'hover:bg-card-hover hover:border-border-medium',
+        isEpic && 'border-l-2',
         isRunning && 'border-status-success-border bg-status-success-bg',
         isStuck && 'border-status-warning-border bg-status-warning-bg',
         className
       )}
+      style={isEpic ? { borderLeftColor: 'var(--accent-gold)' } : undefined}
     >
-      {/* Header: Category & Complexity badges */}
+      {/* Header: Type + Category & Complexity badges */}
       <div className="flex items-center justify-between gap-2 mb-2.5">
-        {category && (
-          <span
-            className="inline-flex items-center px-2 py-0.5 text-detail font-medium uppercase tracking-wide"
-            style={{
-              backgroundColor: `var(--category-${category}-bg, var(--border))`,
-              color: `var(--category-${category}, var(--text-tertiary))`,
-            }}
-          >
-            {category}
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          {isEpic && (
+            <span
+              className="inline-flex items-center gap-1 px-2 py-0.5 text-detail font-medium uppercase tracking-wide"
+              style={{
+                backgroundColor: 'var(--accent-gold-bg)',
+                color: 'var(--accent-gold)',
+              }}
+            >
+              <Layers className="h-3 w-3" />
+              EPIC
+            </span>
+          )}
+          {category && (
+            <span
+              className="inline-flex items-center px-2 py-0.5 text-detail font-medium uppercase tracking-wide"
+              style={{
+                backgroundColor: `var(--category-${category}-bg, var(--border))`,
+                color: `var(--category-${category}, var(--text-tertiary))`,
+              }}
+            >
+              {category}
+            </span>
+          )}
+        </div>
 
         {complexity && (
           <span

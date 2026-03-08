@@ -14,6 +14,9 @@ import { ContextPanel } from '@/components/context';
 import { MonitorPanel } from '@/components/monitor';
 import { BobOrchestrationView } from '@/components/bob';
 import { SquadsPanel } from '@/components/squads';
+import { PRDPanel } from '@/components/prd';
+import { PlansPanel } from '@/components/plans';
+import { BacklogPanel } from '@/components/backlog';
 import { FAB, HelpFAB } from '@/components/ui/fab';
 import { useStories } from '@/hooks/use-stories';
 import type { Story, SidebarView } from '@/types';
@@ -85,6 +88,15 @@ function ViewContent({ view, onStoryClick, onRefresh, isLoading }: ViewContentPr
         />
       );
 
+    case 'backlog':
+      return (
+        <BacklogPanel
+          onStoryClick={onStoryClick}
+          onRefresh={onRefresh}
+          isLoading={isLoading}
+        />
+      );
+
     case 'agents':
       return <AgentMonitor />;
 
@@ -114,6 +126,12 @@ function ViewContent({ view, onStoryClick, onRefresh, isLoading }: ViewContentPr
 
     case 'squads':
       return <SquadsPanel />;
+
+    case 'prds':
+      return <PRDPanel />;
+
+    case 'plans':
+      return <PlansPanel />;
 
     default:
       return <PlaceholderView title={view} description="Coming soon" />;

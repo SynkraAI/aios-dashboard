@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Brain,
   FileText,
@@ -14,10 +14,13 @@ import {
   CheckCircle2,
   XCircle,
   AlertCircle,
+  RefreshCw,
+  Loader2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { apiUrl } from '@/lib/api';
 import { useSettingsStore } from '@/stores/settings-store';
-import { MOCK_CONTEXT, type ContextFile, type ContextMCP } from '@/lib/mock-data';
+import { MOCK_CONTEXT, type ContextFile, type ContextMCP, type ContextData } from '@/lib/mock-data';
 import { Badge } from '@/components/ui/badge';
 
 interface CollapsibleSectionProps {
@@ -124,16 +127,67 @@ function MCPCard({ mcp }: { mcp: ContextMCP }) {
 
 export function ContextPanel() {
   const { settings } = useSettingsStore();
-  const data = settings.useMockData ? MOCK_CONTEXT : null;
+  const [data, setData] = useState<ContextData | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!settings.useMockData || !data) {
+  const fetchContext = useCallback(async () => {
+    if (settings.useMockData) {
+      setData(MOCK_CONTEXT);
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(apiUrl('/api/context'));
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      setData(json);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch context');
+    } finally {
+      setLoading(false);
+    }
+  }, [settings.useMockData]);
+
+  useEffect(() => {
+    fetchContext();
+  }, [fetchContext]);
+
+  if (loading && !data) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 text-muted-foreground mx-auto mb-4 animate-spin" />
+          <p className="text-sm text-muted-foreground">Loading project context...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error && !data) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <div className="text-center">
+          <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+          <p className="text-lg font-medium text-foreground">Failed to Load Context</p>
+          <p className="mt-1 text-sm text-muted-foreground">{error}</p>
+          <button onClick={fetchContext} className="mt-4 text-sm text-blue-500 hover:underline">
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!data) {
     return (
       <div className="flex h-full items-center justify-center">
         <div className="text-center">
           <Brain className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
           <p className="text-lg font-medium text-foreground">No Context Available</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Enable Demo Mode in Settings to see project context
+            No project data found
           </p>
         </div>
       </div>
@@ -148,9 +202,18 @@ export function ContextPanel() {
           <Brain className="h-5 w-5 text-purple-500" />
           <h2 className="text-lg font-semibold">Context</h2>
         </div>
-        <Badge variant="outline" className="text-xs font-mono">
-          {data.projectName}
-        </Badge>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={fetchContext}
+            disabled={loading}
+            className="p-1.5 rounded-md hover:bg-muted transition-colors"
+          >
+            <RefreshCw className={cn('h-4 w-4 text-muted-foreground', loading && 'animate-spin')} />
+          </button>
+          <Badge variant="outline" className="text-xs font-mono">
+            {data.projectName}
+          </Badge>
+        </div>
       </div>
 
       {/* Project Info */}

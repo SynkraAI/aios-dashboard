@@ -55,12 +55,7 @@ interface QAMetrics {
 //                              HELPERS
 // ═══════════════════════════════════════════════════════════════════════════════════
 
-function getProjectRoot(): string {
-  if (process.env.AIOS_PROJECT_ROOT) {
-    return process.env.AIOS_PROJECT_ROOT;
-  }
-  return path.resolve(process.cwd(), '..', '..');
-}
+import { resolveProjectRoot } from '@/lib/project-registry';
 
 async function loadJsonFile<T>(filePath: string, defaultValue: T): Promise<T> {
   try {
@@ -76,7 +71,7 @@ async function loadJsonFile<T>(filePath: string, defaultValue: T): Promise<T> {
 // ═══════════════════════════════════════════════════════════════════════════════════
 
 async function collectQAMetrics(): Promise<QAMetrics> {
-  const projectRoot = getProjectRoot();
+  const projectRoot = await resolveProjectRoot();
   const aiosDir = path.join(projectRoot, '.aios');
 
   // Load gotchas
