@@ -9,10 +9,12 @@ import {
   ArrowLeft,
   User,
   Clock,
+  BookOpen,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { apiUrl } from '@/lib/api';
 import { Badge } from '@/components/ui/badge';
+import { MarkdownRenderer } from '@/components/ui/markdown-renderer';
 
 interface PRDSummary {
   slug: string;
@@ -22,6 +24,7 @@ interface PRDSummary {
   date: string;
   description: string;
   filePath: string;
+  category: 'prd' | 'architecture';
 }
 
 export function PRDPanel() {
@@ -106,11 +109,19 @@ export function PRDPanel() {
           <button onClick={handleBack} className="p-1.5 rounded-md hover:bg-muted transition-colors">
             <ArrowLeft className="h-4 w-4 text-muted-foreground" />
           </button>
-          <FileText className="h-5 w-5 text-blue-500" />
+          {prd?.category === 'architecture' ? (
+            <BookOpen className="h-5 w-5 text-purple-500" />
+          ) : (
+            <FileText className="h-5 w-5 text-blue-500" />
+          )}
           <div className="flex-1 min-w-0">
             <h2 className="text-lg font-semibold truncate">{prd?.title || selectedSlug}</h2>
             <div className="flex items-center gap-3 text-xs text-muted-foreground">
-              {prd?.version && <Badge variant="outline" className="text-xs">v{prd.version}</Badge>}
+              {prd?.category === 'architecture' ? (
+                <Badge variant="outline" className="text-xs border-purple-500/30 text-purple-400">Architecture</Badge>
+              ) : (
+                prd?.version && <Badge variant="outline" className="text-xs">v{prd.version}</Badge>
+              )}
               {prd?.author && <span className="flex items-center gap-1"><User className="h-3 w-3" />{prd.author}</span>}
               {prd?.date && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{prd.date}</span>}
             </div>
@@ -122,11 +133,7 @@ export function PRDPanel() {
               <Loader2 className="h-6 w-6 text-muted-foreground animate-spin" />
             </div>
           ) : (
-            <div className="prose prose-sm dark:prose-invert max-w-none">
-              <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-foreground">
-                {prdContent}
-              </pre>
-            </div>
+            <MarkdownRenderer content={prdContent} hideFirstH1 />
           )}
         </div>
       </div>
@@ -139,7 +146,7 @@ export function PRDPanel() {
       <div className="flex items-center justify-between p-4 border-b border-border">
         <div className="flex items-center gap-3">
           <FileText className="h-5 w-5 text-blue-500" />
-          <h2 className="text-lg font-semibold">PRDs</h2>
+          <h2 className="text-lg font-semibold">PRDs & Architecture</h2>
           <Badge variant="outline" className="text-xs">{prds.length}</Badge>
         </div>
         <button onClick={fetchPRDs} disabled={loading} className="p-1.5 rounded-md hover:bg-muted transition-colors">
@@ -154,14 +161,20 @@ export function PRDPanel() {
             onClick={() => handleSelect(prd.slug)}
             className="w-full flex items-center gap-4 p-4 rounded-lg border border-border hover:bg-muted/50 transition-colors text-left group"
           >
-            <div className="p-2 rounded-lg bg-blue-500/10">
-              <FileText className="h-5 w-5 text-blue-500" />
+            <div className={cn("p-2 rounded-lg", prd.category === 'architecture' ? 'bg-purple-500/10' : 'bg-blue-500/10')}>
+              {prd.category === 'architecture' ? (
+                <BookOpen className="h-5 w-5 text-purple-500" />
+              ) : (
+                <FileText className="h-5 w-5 text-blue-500" />
+              )}
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-medium text-sm truncate">{prd.title}</p>
               <p className="text-xs text-muted-foreground truncate mt-1">{prd.description}</p>
               <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
-                <Badge variant="outline" className="text-xs">v{prd.version}</Badge>
+                <Badge variant="outline" className={cn("text-xs", prd.category === 'architecture' ? 'border-purple-500/30 text-purple-400' : '')}>
+                  {prd.category === 'architecture' ? 'Architecture' : `v${prd.version}`}
+                </Badge>
                 <span className="flex items-center gap-1"><User className="h-3 w-3" />{prd.author}</span>
                 <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{prd.date}</span>
               </div>
@@ -173,7 +186,7 @@ export function PRDPanel() {
 
       <div className="flex items-center justify-between px-4 py-2 border-t border-border bg-muted/30">
         <span className="text-xs text-muted-foreground">
-          Scanned from docs/prd-*.md
+          Scanned from docs/prd-*.md + docs/*architecture*.md
         </span>
         <span className="text-xs text-muted-foreground">
           {prds.length} document{prds.length !== 1 ? 's' : ''}

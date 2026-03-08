@@ -46,6 +46,23 @@ reviews:
         Verify WebSocket handling is robust (reconnection, cleanup).
         Check SQLite queries for injection vulnerabilities.
 
+    - path: "docs/prd-*.md"
+      instructions: |
+        PRD documents must follow AIOX PRD structure.
+        Verify Goals section with clear objectives and Background Context.
+        Check Functional Requirements (FR) and Non-Functional Requirements (NFR) are numbered.
+        Ensure Change Log table exists with Date, Version, Description, Author.
+        Check for Mermaid diagrams illustrating architecture and data flows.
+        Verify Technical Assumptions section is present and accurate.
+        Ensure acceptance criteria are testable.
+
+    - path: "docs/*architecture*"
+      instructions: |
+        Architecture documents must include Mermaid diagrams for visual clarity.
+        Verify component relationships and data flows are documented.
+        Check that technology choices are justified.
+        Ensure diagrams match the actual codebase structure.
+
     - path: "**/*.ts"
       instructions: |
         No 'any' types — use proper typing or 'unknown' with guards.

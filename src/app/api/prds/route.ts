@@ -12,6 +12,43 @@ interface PRDSummary {
   date: string;
   description: string;
   filePath: string;
+  category: 'prd' | 'architecture';
+}
+
+async function parseDocFile(filePath: string, projectRoot: string, category: 'prd' | 'architecture'): Promise<PRDSummary> {
+  const file = path.basename(filePath);
+  const stat = await fs.stat(filePath);
+  const content = await fs.readFile(filePath, 'utf-8');
+  const { data, content: markdown } = matter(content);
+
+  // Extract title from first H1
+  const titleMatch = markdown.match(/^#\s+(.+)/m);
+  const title = (data.title as string) || (titleMatch ? titleMatch[1].trim() : file.replace(/\.md$/, ''));
+
+  // Extract first paragraph as description
+  const lines = markdown.split('\n').filter(l => l.trim() && !l.startsWith('#'));
+  const description = (data.description as string) || lines[0]?.trim() || '';
+
+  // Extract version from changelog table if present
+  const versionMatch = markdown.match(/\|\s*[\d-]+\s*\|\s*([\d.]+)\s*\|/);
+  const version = (data.version as string) || (versionMatch ? versionMatch[1] : '1.0');
+
+  // Extract author
+  const authorMatch = markdown.match(/\|\s*[\d-]+\s*\|\s*[\d.]+\s*\|\s*[^|]+\|\s*([^|]+)\|/);
+  const author = (data.author as string) || (authorMatch ? authorMatch[1].trim() : 'Unknown');
+
+  const slug = file.replace(/\.md$/, '');
+
+  return {
+    slug,
+    title,
+    version,
+    author,
+    date: data.date || stat.mtime.toISOString().split('T')[0],
+    description: description.slice(0, 200),
+    filePath: path.relative(projectRoot, filePath),
+    category,
+  };
 }
 
 export async function GET() {
@@ -22,42 +59,43 @@ export async function GET() {
 
     try {
       const files = await fs.readdir(docsDir);
+
       for (const file of files) {
-        if (!file.startsWith('prd-') || !file.endsWith('.md')) continue;
-        const filePath = path.join(docsDir, file);
-        const stat = await fs.stat(filePath);
-        if (!stat.isFile()) continue;
+        // PRD files
+        if (file.startsWith('prd-') && file.endsWith('.md')) {
+          const filePath = path.join(docsDir, file);
+          const stat = await fs.stat(filePath);
+          if (stat.isFile()) {
+            prds.push(await parseDocFile(filePath, projectRoot, 'prd'));
+          }
+        }
+        // Architecture files in docs root
+        if (file.includes('architecture') && file.endsWith('.md')) {
+          const filePath = path.join(docsDir, file);
+          const stat = await fs.stat(filePath);
+          if (stat.isFile()) {
+            prds.push(await parseDocFile(filePath, projectRoot, 'architecture'));
+          }
+        }
+      }
 
-        const content = await fs.readFile(filePath, 'utf-8');
-        const { data, content: markdown } = matter(content);
-
-        // Extract title from first H1
-        const titleMatch = markdown.match(/^#\s+(.+)/m);
-        const title = (data.title as string) || (titleMatch ? titleMatch[1].trim() : file.replace(/\.md$/, ''));
-
-        // Extract first paragraph as description
-        const lines = markdown.split('\n').filter(l => l.trim() && !l.startsWith('#'));
-        const description = (data.description as string) || lines[0]?.trim() || '';
-
-        // Extract version from changelog table if present
-        const versionMatch = markdown.match(/\|\s*[\d-]+\s*\|\s*([\d.]+)\s*\|/);
-        const version = (data.version as string) || (versionMatch ? versionMatch[1] : '1.0');
-
-        // Extract author
-        const authorMatch = markdown.match(/\|\s*[\d-]+\s*\|\s*[\d.]+\s*\|\s*[^|]+\|\s*([^|]+)\|/);
-        const author = (data.author as string) || (authorMatch ? authorMatch[1].trim() : 'Unknown');
-
-        const slug = file.replace(/\.md$/, '');
-
-        prds.push({
-          slug,
-          title,
-          version,
-          author,
-          date: data.date || stat.mtime.toISOString().split('T')[0],
-          description: description.slice(0, 200),
-          filePath: path.relative(projectRoot, filePath),
-        });
+      // Also scan docs/architecture/ subdirectory (English only)
+      const archDir = path.join(docsDir, 'architecture');
+      try {
+        const archFiles = await fs.readdir(archDir);
+        for (const file of archFiles) {
+          if (!file.endsWith('.md')) continue;
+          const filePath = path.join(archDir, file);
+          const stat = await fs.stat(filePath);
+          if (stat.isFile()) {
+            const doc = await parseDocFile(filePath, projectRoot, 'architecture');
+            // Prefix slug to avoid collision with root-level docs
+            doc.slug = `architecture/${file.replace(/\.md$/, '')}`;
+            prds.push(doc);
+          }
+        }
+      } catch {
+        // architecture subdirectory doesn't exist
       }
     } catch {
       // docs directory doesn't exist
