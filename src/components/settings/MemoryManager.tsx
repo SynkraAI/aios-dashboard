@@ -313,7 +313,7 @@ export function MemoryManager() {
               <p className="text-xs text-tertiary">Arquivos</p>
             </GlassCard>
             <GlassCard className="text-center py-3">
-              <div className="text-2xl font-bold text-purple-500">{overview?.totalDirectories || 0}</div>
+              <div className="text-2xl font-bold text-amber-500">{overview?.totalDirectories || 0}</div>
               <p className="text-xs text-tertiary">Pastas</p>
             </GlassCard>
             <GlassCard className="text-center py-3">
@@ -543,7 +543,7 @@ export function MemoryManager() {
               <p className="text-xs text-tertiary">Squads</p>
             </GlassCard>
             <GlassCard className="text-center py-3">
-              <div className="text-2xl font-bold text-purple-500">{agentKnowledge?.length || 0}</div>
+              <div className="text-2xl font-bold text-amber-500">{agentKnowledge?.length || 0}</div>
               <p className="text-xs text-tertiary">Agentes com Knowledge</p>
             </GlassCard>
             <GlassCard className="text-center py-3">
@@ -658,10 +658,10 @@ export function MemoryManager() {
           </GlassCard>
 
           {/* Info Card */}
-          <GlassCard className="!bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-purple-500/20">
+          <GlassCard className="!bg-indigo-500/10 border-indigo-500/20">
             <div className="flex items-start gap-3">
-              <div className="h-10 w-10 rounded-xl bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-purple-400">
+              <div className="h-10 w-10 rounded-xl bg-indigo-500/20 flex items-center justify-center flex-shrink-0">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-indigo-400">
                   <circle cx="12" cy="12" r="10" />
                   <line x1="12" y1="16" x2="12" y2="12" />
                   <line x1="12" y1="8" x2="12.01" y2="8" />
