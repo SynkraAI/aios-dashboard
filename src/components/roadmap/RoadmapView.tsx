@@ -17,10 +17,10 @@ import { cn } from '../../lib/utils';
 // --- Priority Config ---
 
 const priorityConfig = {
-  must: { label: 'Must Have', borderColor: 'border-l-red-500', textColor: 'text-red-400' },
-  should: { label: 'Should Have', borderColor: 'border-l-yellow-500', textColor: 'text-yellow-400' },
-  could: { label: 'Could Have', borderColor: 'border-l-blue-500', textColor: 'text-blue-400' },
-  wont: { label: "Won't Have", borderColor: 'border-l-gray-500', textColor: 'text-gray-400' },
+  must: { label: 'Must Have', borderColor: 'border-red-500/50', textColor: 'text-red-400' },
+  should: { label: 'Should Have', borderColor: 'border-yellow-500/50', textColor: 'text-yellow-400' },
+  could: { label: 'Could Have', borderColor: 'border-blue-500/50', textColor: 'text-blue-400' },
+  wont: { label: "Won't Have", borderColor: 'border-gray-500/50', textColor: 'text-gray-400' },
 } as const;
 
 const impactColors = {
@@ -105,7 +105,7 @@ function PrioritySection({ priority, features }: { priority: keyof typeof priori
   const config = priorityConfig[priority];
 
   return (
-    <GlassCard padding="md" className={cn('border-l-4', config.borderColor)}>
+    <GlassCard padding="md" className={cn('border', config.borderColor)}>
       <SectionLabel count={features.length}>
         <span className={config.textColor}>{config.label}</span>
       </SectionLabel>
@@ -335,7 +335,7 @@ function TimelineView({ features }: { features: RoadmapFeature[] }) {
                             'hover:ring-1 hover:ring-white/20',
                             statusBarStyle[feature.status],
                           )}
-                          style={{ background: `${quarterColors[q]}25`, borderLeft: `3px solid ${quarterColors[q]}` }}
+                          style={{ background: `${quarterColors[q]}25`, border: `1px solid ${quarterColors[q]}66` }}
                           title={`${feature.title} — ${statusLabels[feature.status]}`}
                         >
                           {feature.status === 'done' && <CheckCircle size={10} className="text-green-400 flex-shrink-0" />}

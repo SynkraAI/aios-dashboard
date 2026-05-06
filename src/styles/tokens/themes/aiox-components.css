@@ -164,7 +164,7 @@ html[data-theme="aiox"] [class*="backdrop-blur"] {
 
 /* ============================================
    SEMITRANSPARENT BG FIX — Solid Replacements
-   bg-black/50, bg-black/40 etc. are invisible
+   rgb(0 0 0 / 0.5), rgb(0 0 0 / 0.4) etc. are invisible
    without blur on flat dark backgrounds.
    Give them a solid surface color instead.
    Excludes fullscreen overlays (inset-0).

@@ -410,7 +410,7 @@ export function WorkflowView({ onClose }: WorkflowViewProps) {
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-md"
+        className="absolute inset-0 bg-[rgb(0_0_0/0.4)] backdrop-blur-md"
         onClick={onClose}
       />
 

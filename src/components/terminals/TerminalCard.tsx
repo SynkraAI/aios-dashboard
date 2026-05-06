@@ -86,7 +86,7 @@ export function TerminalCard({ session, listMode = false }: TerminalCardProps) {
           >
             <div
               className={cn(
-                'bg-black/80 p-3 font-mono text-xs leading-relaxed overflow-y-auto',
+                'bg-[rgb(0_0_0/0.8)] p-3 font-mono text-xs leading-relaxed overflow-y-auto',
                 !listMode && 'h-[200px]',
                 listMode && 'max-h-[160px]',
               )}
@@ -117,7 +117,7 @@ export function TerminalCard({ session, listMode = false }: TerminalCardProps) {
 
       {/* Last output preview (when minimized) */}
       {minimized && session.output.length > 0 && (
-        <div className="px-3 py-1.5 border-t border-white/5 bg-black/40">
+        <div className="px-3 py-1.5 border-t border-white/5 bg-[rgb(0_0_0/0.4)]">
           <p className="font-mono text-[10px] text-tertiary truncate">
             {session.output[session.output.length - 1]}
           </p>

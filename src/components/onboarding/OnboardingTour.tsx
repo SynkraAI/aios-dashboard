@@ -259,7 +259,7 @@ export function OnboardingTour({ onComplete }: OnboardingTourProps) {
             </rect>
           </svg>
         ) : (
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-[rgb(0_0_0/0.4)] backdrop-blur-[2px]" />
         )}
 
         {/* Tour Card */}

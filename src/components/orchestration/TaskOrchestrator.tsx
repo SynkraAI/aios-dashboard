@@ -882,7 +882,7 @@ export default function TaskOrchestrator() {
                   : totalSteps > 0 ? (completedSteps / totalSteps) * 100
                   : 0;
                 return (
-                  <div className="h-1 bg-black/30 flex-shrink-0">
+                  <div className="h-1 bg-[rgb(0_0_0/0.3)] flex-shrink-0">
                     <motion.div
                       className={cn('h-full', state.status === 'failed' && 'bg-gradient-to-r from-red-500 to-rose-500')}
                       initial={{ width: 0 }}

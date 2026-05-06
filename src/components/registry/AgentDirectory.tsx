@@ -234,7 +234,7 @@ function AgentDetailPanel({
       className={cn(
         'absolute inset-y-0 right-0 z-10 flex flex-col overflow-hidden',
         'w-full sm:w-[420px] lg:w-[460px]',
-        'border-l border-white/10 bg-black/80 backdrop-blur-xl'
+        'border-l border-white/10 bg-[rgb(0_0_0/0.8)] backdrop-blur-xl'
       )}
     >
       {/* Panel header */}
@@ -608,7 +608,7 @@ export default function AgentDirectory() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
-              className="absolute inset-0 z-[5] bg-black/40 sm:bg-black/20 backdrop-blur-sm sm:backdrop-blur-none"
+              className="absolute inset-0 z-[5] bg-[rgb(0_0_0/0.4)] sm:bg-[rgb(0_0_0/0.2)] backdrop-blur-sm sm:backdrop-blur-none"
               onClick={handleClose}
               aria-hidden="true"
             />

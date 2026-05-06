@@ -82,11 +82,11 @@ const MermaidDiagram = memo(function MermaidDiagram({ code }: MermaidDiagramProp
   if (error) {
     return (
       <div className="my-3 rounded-lg overflow-hidden border border-white/10">
-        <div className="flex items-center justify-between px-3 py-1.5 bg-black/30">
+        <div className="flex items-center justify-between px-3 py-1.5 bg-[rgb(0_0_0/0.3)]">
           <span className="text-[10px] uppercase tracking-wider text-white/50 font-mono">mermaid</span>
           <span className="text-[10px] text-amber-400">Diagrama em texto</span>
         </div>
-        <pre className="p-4 text-[13px] text-white/70 bg-black/40 overflow-x-auto font-mono leading-relaxed">
+        <pre className="p-4 text-[13px] text-white/70 bg-[rgb(0_0_0/0.4)] overflow-x-auto font-mono leading-relaxed">
           <code>{code}</code>
         </pre>
       </div>
@@ -106,7 +106,7 @@ const MermaidDiagram = memo(function MermaidDiagram({ code }: MermaidDiagramProp
 
   return (
     <div ref={containerRef} className="my-3 rounded-lg overflow-hidden border border-white/10 bg-[#0d0d14]">
-      <div className="flex items-center justify-between px-3 py-1.5 bg-black/30 border-b border-white/5">
+      <div className="flex items-center justify-between px-3 py-1.5 bg-[rgb(0_0_0/0.3)] border-b border-white/5">
         <span className="text-[10px] uppercase tracking-wider text-[#D1FF00]/60 font-mono flex items-center gap-1.5">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#D1FF00]/50">
             <circle cx="12" cy="12" r="10" />
@@ -123,7 +123,7 @@ const MermaidDiagram = memo(function MermaidDiagram({ code }: MermaidDiagramProp
       </div>
 
       {showCode ? (
-        <pre className="p-4 text-[13px] text-white/70 bg-black/40 overflow-x-auto font-mono leading-relaxed">
+        <pre className="p-4 text-[13px] text-white/70 bg-[rgb(0_0_0/0.4)] overflow-x-auto font-mono leading-relaxed">
           <code>{code}</code>
         </pre>
       ) : (

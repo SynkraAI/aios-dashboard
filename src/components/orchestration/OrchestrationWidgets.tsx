@@ -269,7 +269,7 @@ export const SquadCard = memo(function SquadCard({ selection, isActive }: { sele
                     key={agent.id}
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-black/20 text-white/80"
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[rgb(0_0_0/0.2)] text-white/80"
                   >
                     {agent.name || agent.id}
                   </motion.span>

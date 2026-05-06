@@ -150,7 +150,7 @@ export function SmartOrchestrationDialog({
                 variant="primary"
                 onClick={onStart}
                 disabled={!demand.trim() || demand.trim().length < 10}
-                className="bg-gradient-to-r from-purple-500 to-cyan-500"
+                className="bg-indigo-500"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-1">
                   <circle cx="12" cy="12" r="3" />

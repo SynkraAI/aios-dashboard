@@ -59,7 +59,7 @@ export function WorkflowMissionDetail({ mission, onClose }: WorkflowMissionDetai
       className="fixed inset-0 z-[60] flex items-center justify-center p-4"
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-[rgb(0_0_0/0.4)]" onClick={onClose} />
 
       {/* Modal */}
       <motion.div

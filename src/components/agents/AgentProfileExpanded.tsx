@@ -95,7 +95,7 @@ export function AgentProfileExpanded({ agent, isOpen, onClose, onStartChat }: Ag
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-[rgb(0_0_0/0.6)] backdrop-blur-sm p-4"
           >
           {/* Modal */}
           <motion.div

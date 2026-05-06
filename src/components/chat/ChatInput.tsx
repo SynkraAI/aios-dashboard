@@ -393,7 +393,7 @@ export function ChatInput({
                         alt={file.name}
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <div className="absolute inset-0 bg-[rgb(0_0_0/0.5)] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <button
                           onClick={() => removeFile(file.id)}
                           aria-label={`Remover arquivo ${file.name}`}
@@ -402,7 +402,7 @@ export function ChatInput({
                           <CloseIcon aria-hidden="true" />
                         </button>
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-1 py-0.5">
+                      <div className="absolute bottom-0 left-0 right-0 bg-[rgb(0_0_0/0.7)] px-1 py-0.5">
                         <p className="text-[10px] text-white truncate">{file.name}</p>
                       </div>
                     </>
@@ -531,9 +531,9 @@ export function ChatInput({
       {/* Formatting hint */}
       <div className="hidden md:flex items-center justify-between px-2 pt-2 text-[10px] text-tertiary">
         <span>
-          <kbd className="px-1 py-0.5 rounded bg-black/5 dark:bg-white/5">Enter</kbd>
+          <kbd className="px-1 py-0.5 rounded bg-[rgb(0_0_0/0.05)] dark:bg-white/5">Enter</kbd>
           {' '}para enviar ·{' '}
-          <kbd className="px-1 py-0.5 rounded bg-black/5 dark:bg-white/5">Shift+Enter</kbd>
+          <kbd className="px-1 py-0.5 rounded bg-[rgb(0_0_0/0.05)] dark:bg-white/5">Shift+Enter</kbd>
           {' '}para nova linha ·{' '}
           <span className="text-blue-400">**negrito**</span> <span className="text-purple-400">*italico*</span>
         </span>

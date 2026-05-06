@@ -186,7 +186,7 @@ export const AgentOutputCard = memo(function AgentOutputCard({
             <div className="px-4 pb-4">
               <div
                 className={`p-4 rounded-xl ${
-                  isReviewer ? 'bg-black/30' : 'bg-black/20'
+                  isReviewer ? 'bg-[rgb(0_0_0/0.3)]' : 'bg-[rgb(0_0_0/0.2)]'
                 } border border-white/5`}
               >
                 {isStreaming ? (

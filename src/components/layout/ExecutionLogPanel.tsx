@@ -140,7 +140,7 @@ export function ExecutionLogPanel({ className }: ExecutionLogPanelProps) {
 
       {/* Progress bar when executing */}
       {isExecuting && currentExecution.totalSteps > 1 && (
-        <div className="h-0.5 bg-black/20">
+        <div className="h-0.5 bg-[rgb(0_0_0/0.2)]">
           <motion.div
             className="h-full bg-gradient-to-r from-orange-500 to-yellow-500"
             initial={{ width: 0 }}
@@ -217,7 +217,7 @@ export function ExecutionLogPanel({ className }: ExecutionLogPanelProps) {
                           <summary className="text-[10px] text-tertiary cursor-pointer hover:text-secondary">
                             Detalhes
                           </summary>
-                          <pre className="text-[9px] text-tertiary mt-1 p-1 bg-black/20 rounded overflow-x-auto">
+                          <pre className="text-[9px] text-tertiary mt-1 p-1 bg-[rgb(0_0_0/0.2)] rounded overflow-x-auto">
                             {JSON.stringify(log.details, null, 2)}
                           </pre>
                         </details>

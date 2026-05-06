@@ -306,7 +306,7 @@ function MobileSidebar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+            className="md:hidden fixed inset-0 bg-[rgb(0_0_0/0.5)] backdrop-blur-sm z-40"
             onClick={() => setMobileMenuOpen(false)}
           />
 

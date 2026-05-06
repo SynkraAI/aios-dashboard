@@ -260,7 +260,7 @@ const CodeBlock = memo(function CodeBlock({
   return (
     <div className="relative group my-3 rounded-lg overflow-hidden">
       {language && (
-        <div className="absolute top-0 left-0 px-3 py-1 text-[10px] uppercase tracking-wider text-white/50 bg-black/30 rounded-br font-mono">
+        <div className="absolute top-0 left-0 px-3 py-1 text-[10px] uppercase tracking-wider text-white/50 bg-[rgb(0_0_0/0.3)] rounded-br font-mono">
           {language}
         </div>
       )}
@@ -297,7 +297,7 @@ function DiffBlock({ value }: { value: string }) {
 
   return (
     <div className="relative group my-3 rounded-lg overflow-hidden">
-      <div className="absolute top-0 left-0 px-3 py-1 text-[10px] uppercase tracking-wider text-white/50 bg-black/30 rounded-br font-mono">
+      <div className="absolute top-0 left-0 px-3 py-1 text-[10px] uppercase tracking-wider text-white/50 bg-[rgb(0_0_0/0.3)] rounded-br font-mono">
         diff
       </div>
       <CopyButton code={value} />
@@ -529,8 +529,8 @@ const MarkdownImage = memo(function MarkdownImage({ src, alt }: { src?: string; 
           />
         )}
         {!error && (
-          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-            <span className="text-xs text-white bg-black/50 px-2 py-1 rounded flex items-center gap-1">
+          <div className="absolute inset-0 bg-[rgb(0_0_0/0.5)] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+            <span className="text-xs text-white bg-[rgb(0_0_0/0.5)] px-2 py-1 rounded flex items-center gap-1">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M15 3h6v6" />
                 <path d="M9 21H3v-6" />
@@ -549,7 +549,7 @@ const MarkdownImage = memo(function MarkdownImage({ src, alt }: { src?: string; 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[9999] bg-[rgb(0_0_0/0.95)] flex items-center justify-center p-4"
             onClick={() => setShowLightbox(false)}
           >
             <button
@@ -765,7 +765,7 @@ const components = {
   // Blockquote
   blockquote({ children }: React.BlockquoteHTMLAttributes<HTMLQuoteElement>) {
     return (
-      <blockquote className="border-l-3 border-[#D1FF00]/40 pl-4 my-3 py-1 bg-[#D1FF00]/[0.03] rounded-r-lg italic text-white/60">
+      <blockquote className="border border-[#D1FF00]/30 pl-4 my-3 py-1 bg-[#D1FF00]/[0.03] rounded-lg italic text-white/60">
         {children}
       </blockquote>
     );

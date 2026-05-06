@@ -56,6 +56,7 @@ export default defineConfig({
           css: true,
           reporters: ['verbose'],
           testTimeout: 30000,
+          hookTimeout: 45000,
           retry: 1, // retry flaky timeouts from heavy dynamic imports under load
           pool: 'forks', // forks for better mock isolation across test files
           maxForks: 4, // limit concurrency to avoid timeouts on heavy dynamic imports

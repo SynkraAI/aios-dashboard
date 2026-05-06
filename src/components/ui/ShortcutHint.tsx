@@ -53,7 +53,7 @@ export function ShortcutHint({ keys, children, position = 'bottom', delay = 600 
             exit={origins[position].exit}
             transition={{ duration: 0.15 }}
           >
-            <span className="flex items-center gap-0.5 px-1.5 py-1 rounded-lg bg-black/90 border border-white/10 whitespace-nowrap">
+            <span className="flex items-center gap-0.5 px-1.5 py-1 rounded-lg bg-[rgb(0_0_0/0.9)] border border-white/10 whitespace-nowrap">
               {keys.map((key, i) => (
                 <span key={i} className="flex items-center">
                   <kbd className="px-1 py-0.5 rounded text-[10px] font-mono text-white/90 bg-white/10 leading-none">

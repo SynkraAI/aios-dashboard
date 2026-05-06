@@ -116,7 +116,7 @@ export function WorkflowSidebar({
                 <span className="text-white/60">Progresso geral</span>
                 <span className="text-white font-semibold">{mission.progress}%</span>
               </div>
-              <div className="h-2 rounded-full bg-black/30 overflow-hidden">
+              <div className="h-2 rounded-full bg-[rgb(0_0_0/0.3)] overflow-hidden">
                 <motion.div
                   className="h-full rounded-full"
                   initial={{ width: 0 }}
@@ -256,13 +256,13 @@ export function WorkflowSidebar({
 
 function OperationItem({ operation, index }: { operation: WorkflowOperation; index: number }) {
   const squadStyles: Record<string, { border: string; bg: string }> = {
-    copywriting: { border: 'border-l-[var(--color-accent,#D1FF00)]', bg: 'from-[rgba(209,255,0,0.08)]' },
-    design: { border: 'border-l-[var(--color-accent,#D1FF00)]', bg: 'from-[rgba(209,255,0,0.06)]' },
-    creator: { border: 'border-l-[var(--color-accent,#D1FF00)]', bg: 'from-[rgba(209,255,0,0.08)]' },
-    orchestrator: { border: 'border-l-[var(--color-accent,#D1FF00)]', bg: 'from-[rgba(209,255,0,0.10)]' },
+    copywriting: { border: 'border-[var(--color-accent,#D1FF00)]', bg: 'from-[rgba(209,255,0,0.08)]' },
+    design: { border: 'border-[var(--color-accent,#D1FF00)]', bg: 'from-[rgba(209,255,0,0.06)]' },
+    creator: { border: 'border-[var(--color-accent,#D1FF00)]', bg: 'from-[rgba(209,255,0,0.08)]' },
+    orchestrator: { border: 'border-[var(--color-accent,#D1FF00)]', bg: 'from-[rgba(209,255,0,0.10)]' },
   };
 
-  const style = squadStyles[operation.squadType] || { border: 'border-l-gray-500', bg: 'from-gray-500/10' };
+  const style = squadStyles[operation.squadType] || { border: 'border-gray-500', bg: 'from-gray-500/10' };
 
   return (
     <motion.div
@@ -270,11 +270,10 @@ function OperationItem({ operation, index }: { operation: WorkflowOperation; ind
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.03 }}
       className={cn(
-        'rounded-lg p-3 border-l-2 transition-all hover:translate-x-1',
+        'rounded-lg p-3 border transition-all hover:translate-x-1',
         style.border,
         `bg-gradient-to-r ${style.bg} to-transparent`
       )}
-      style={{ border: '1px solid var(--glass-border-color-subtle)', borderLeftWidth: '2px' }}
     >
       <div className="flex items-start justify-between gap-2 mb-1">
         <div className="flex items-center gap-2">

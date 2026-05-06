@@ -1,7 +1,7 @@
 /* ============================================
    LIGHT MODE COMPATIBILITY LAYER
    Remaps hardcoded dark-only Tailwind utilities
-   (text-white, bg-white/*, border-white/*, bg-black/*)
+   (text-white, bg-white/*, border-white/*)
    to appropriate light-mode values using semantic tokens.
 
    Applied via :root:not(.dark) so it ONLY activates
@@ -95,16 +95,19 @@
 :root:not(.dark) .hover\:bg-white\/10:hover { background-color: rgba(0, 0, 0, 0.06) !important; }
 :root:not(.dark) .hover\:bg-white\/20:hover { background-color: rgba(0, 0, 0, 0.10) !important; }
 
-/* bg-black/ variants → lighter overlays */
-:root:not(.dark) .bg-black\/10 { background-color: rgba(0, 0, 0, 0.04) !important; }
-:root:not(.dark) .bg-black\/20 { background-color: rgba(0, 0, 0, 0.06) !important; }
-:root:not(.dark) .bg-black\/30 { background-color: rgba(0, 0, 0, 0.08) !important; }
-:root:not(.dark) .bg-black\/40 { background-color: rgba(0, 0, 0, 0.10) !important; }
-:root:not(.dark) .bg-black\/50 { background-color: rgba(0, 0, 0, 0.15) !important; }
-:root:not(.dark) .bg-black\/60 { background-color: rgba(0, 0, 0, 0.20) !important; }
-:root:not(.dark) .bg-black\/70 { background-color: rgba(0, 0, 0, 0.25) !important; }
-:root:not(.dark) .bg-black\/80 { background-color: rgba(0, 0, 0, 0.35) !important; }
-:root:not(.dark) .bg-black\/90 { background-color: rgba(0, 0, 0, 0.50) !important; }
+/* CDM-UI-002: legacy bg-(black)/* utilities replaced by arbitrary
+   `bg-[rgb(0_0_0/0.X)]` values in components — light-mode tweaks moved
+   to attribute-selector form below to keep softer overlays in light theme. */
+:root:not(.dark) [class*="rgb(0_0_0/0.1)"] { background-color: rgba(0, 0, 0, 0.04) !important; }
+:root:not(.dark) [class*="rgb(0_0_0/0.2)"] { background-color: rgba(0, 0, 0, 0.06) !important; }
+:root:not(.dark) [class*="rgb(0_0_0/0.3)"] { background-color: rgba(0, 0, 0, 0.08) !important; }
+:root:not(.dark) [class*="rgb(0_0_0/0.4)"] { background-color: rgba(0, 0, 0, 0.10) !important; }
+:root:not(.dark) [class*="rgb(0_0_0/0.5)"] { background-color: rgba(0, 0, 0, 0.15) !important; }
+:root:not(.dark) [class*="rgb(0_0_0/0.6)"] { background-color: rgba(0, 0, 0, 0.20) !important; }
+:root:not(.dark) [class*="rgb(0_0_0/0.7)"] { background-color: rgba(0, 0, 0, 0.25) !important; }
+:root:not(.dark) [class*="rgb(0_0_0/0.8)"] { background-color: rgba(0, 0, 0, 0.35) !important; }
+:root:not(.dark) [class*="rgb(0_0_0/0.9)"] { background-color: rgba(0, 0, 0, 0.50) !important; }
+:root:not(.dark) [class*="rgb(0_0_0/0.95)"] { background-color: rgba(0, 0, 0, 0.60) !important; }
 
 /* bg-gray-900 variants (commonly used as dark panels) */
 :root:not(.dark) .bg-gray-900\/95 { background-color: rgba(255, 255, 255, 0.90) !important; }

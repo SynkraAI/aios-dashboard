@@ -214,7 +214,7 @@ export function WorkflowManager() {
       {/* Header Stats */}
       <div className="grid grid-cols-3 gap-4">
         <GlassCard className="text-center py-3">
-          <div className="text-2xl font-bold text-purple-500">{workflows.length}</div>
+          <div className="text-2xl font-bold text-amber-500">{workflows.length}</div>
           <p className="text-xs text-tertiary">Workflows</p>
         </GlassCard>
         <GlassCard className="text-center py-3">
@@ -489,7 +489,7 @@ export function CreateWorkflowModal({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/90 z-[9998]"
+        className="fixed inset-0 bg-[rgb(0_0_0/0.9)] z-[9998]"
         onClick={onClose}
       />
 

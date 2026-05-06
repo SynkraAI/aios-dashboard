@@ -192,7 +192,7 @@ function OrchStatusTab({
           {/* Progress bar */}
           {(task.status === 'analyzing' || task.status === 'planning' || task.status === 'executing') && (
             <div className="mt-3">
-              <div className="h-1.5 bg-black/20 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-[rgb(0_0_0/0.2)] rounded-full overflow-hidden">
                 <motion.div
                   className="h-full rounded-full"
                   initial={{ width: '0%' }}
@@ -245,7 +245,7 @@ function OrchStatusTab({
                     )}
                   </div>
                   {/* Mini progress */}
-                  <div className="mt-1.5 h-1 bg-black/20 rounded-full overflow-hidden">
+                  <div className="mt-1.5 h-1 bg-[rgb(0_0_0/0.2)] rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all duration-300"
                       style={{

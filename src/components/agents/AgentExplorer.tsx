@@ -129,7 +129,7 @@ export function AgentExplorer({ isOpen, onClose }: AgentExplorerProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className={cn('absolute inset-0', isAiox ? 'bg-black' : 'bg-black/60 backdrop-blur-sm')}
+          className={cn('absolute inset-0', isAiox ? 'bg-[var(--color-background-base)]' : 'bg-[rgb(0_0_0/0.6)] backdrop-blur-sm')}
           onClick={onClose}
         />
 
