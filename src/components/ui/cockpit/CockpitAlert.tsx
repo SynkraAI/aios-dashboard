@@ -8,10 +8,10 @@ export interface CockpitAlertProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const variantStyles: Record<string, React.CSSProperties> = {
-  info: { borderLeftColor: 'var(--aiox-blue)', background: 'rgba(0, 153, 255, 0.05)' },
-  success: { borderLeftColor: 'var(--aiox-lime)', background: 'rgba(209, 255, 0, 0.05)' },
-  warning: { borderLeftColor: 'var(--aiox-flare)', background: 'rgba(237, 70, 9, 0.05)' },
-  error: { borderLeftColor: 'var(--color-status-error)', background: 'rgba(239, 68, 68, 0.05)' },
+  info: { borderColor: 'rgba(0, 153, 255, 0.4)', background: 'rgba(0, 153, 255, 0.05)' },
+  success: { borderColor: 'rgba(209, 255, 0, 0.4)', background: 'rgba(209, 255, 0, 0.05)' },
+  warning: { borderColor: 'rgba(237, 70, 9, 0.4)', background: 'rgba(237, 70, 9, 0.05)' },
+  error: { borderColor: 'rgba(239, 68, 68, 0.4)', background: 'rgba(239, 68, 68, 0.05)' },
 }
 
 export function CockpitAlert({ variant = 'info', title, icon, children, className, style, ...props }: CockpitAlertProps) {
@@ -23,7 +23,8 @@ export function CockpitAlert({ variant = 'info', title, icon, children, classNam
         display: 'flex',
         gap: '0.75rem',
         padding: '1rem 1.25rem',
-        borderLeft: '3px solid',
+        border: '1px solid',
+        borderRadius: '0.5rem',
         ...variantStyles[variant],
         ...style,
       }}
