@@ -79,7 +79,7 @@ export default function JobLogsViewer({ jobId, jobStatus }: JobLogsViewerProps) 
           )}
           <pre
             ref={scrollRef}
-            className="text-[11px] font-mono text-secondary bg-black/20 p-3 rounded-lg max-h-60 overflow-auto whitespace-pre-wrap break-all leading-relaxed"
+            className="text-[11px] font-mono text-secondary bg-[rgb(0_0_0/0.2)] p-3 rounded-lg max-h-60 overflow-auto whitespace-pre-wrap break-all leading-relaxed"
           >
             {data.logs.map((line, i) => (
               <div

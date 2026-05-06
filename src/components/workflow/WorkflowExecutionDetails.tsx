@@ -262,7 +262,7 @@ export function WorkflowExecutionDetails({
                       return (
                         <div
                           key={step.id}
-                          className={cn('rounded-lg p-2 border-l-2', style.border)}
+                          className={cn('rounded-lg p-2 border', style.border)}
                           style={{ background: 'var(--color-background-disabled)' }}
                         >
                           <div className="flex items-center gap-2 mb-1">
@@ -323,11 +323,10 @@ export function WorkflowExecutionDetails({
                 {/* Error if failed */}
                 {state.status === 'failed' && state.error && (
                   <div
-                    className="rounded-xl p-3 border-l-2 border-red-500"
+                    className="rounded-xl p-3"
                     style={{
                       background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, transparent 100%)',
-                      border: '1px solid rgba(239, 68, 68, 0.2)',
-                      borderLeftWidth: '2px'
+                      border: '1px solid rgba(239, 68, 68, 0.35)'
                     }}
                   >
                     <div className="flex items-center gap-2 mb-1">
@@ -397,7 +396,7 @@ export function WorkflowExecutionDetails({
                         <SpinnerIcon size={14} />
                         <span className="text-xs font-semibold" style={{ color: 'var(--color-accent, #D1FF00)' }}>Processando...</span>
                       </div>
-                      <div className="h-2 rounded-full bg-black/30 overflow-hidden">
+                      <div className="h-2 rounded-full bg-[rgb(0_0_0/0.3)] overflow-hidden">
                         <motion.div
                           className="h-full rounded-full"
                           animate={{ x: ['-100%', '100%'] }}
@@ -569,11 +568,10 @@ export function WorkflowExecutionDetails({
                   {/* Error */}
                   {selectedStep.status === 'failed' && selectedStep.error && (
                     <div
-                      className="rounded-xl p-3 border-l-2 border-red-500"
+                      className="rounded-xl p-3"
                       style={{
                         background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, transparent 100%)',
-                        border: '1px solid rgba(239, 68, 68, 0.2)',
-                        borderLeftWidth: '2px'
+                        border: '1px solid rgba(239, 68, 68, 0.35)'
                       }}
                     >
                       <div className="flex items-center gap-2 mb-1">
@@ -591,7 +589,7 @@ export function WorkflowExecutionDetails({
                         <CodeIcon />
                         <span>Ver JSON completo</span>
                       </summary>
-                      <pre className="mt-2 p-3 bg-black/30 rounded-xl overflow-x-auto text-white/60 text-[10px] leading-relaxed">
+                      <pre className="mt-2 p-3 bg-[rgb(0_0_0/0.3)] rounded-xl overflow-x-auto text-white/60 text-[10px] leading-relaxed">
                         {JSON.stringify(output, null, 2)}
                       </pre>
                     </details>

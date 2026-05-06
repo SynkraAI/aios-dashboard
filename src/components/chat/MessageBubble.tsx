@@ -325,8 +325,8 @@ function ImageAttachment({ attachment }: { attachment: MessageAttachment }) {
           loading="lazy"
         />
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-          <span className="text-xs text-white bg-black/50 px-2 py-1 rounded">
+        <div className="absolute inset-0 bg-[rgb(0_0_0/0.5)] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+          <span className="text-xs text-white bg-[rgb(0_0_0/0.5)] px-2 py-1 rounded">
             Clique para ampliar
           </span>
         </div>
@@ -339,7 +339,7 @@ function ImageAttachment({ attachment }: { attachment: MessageAttachment }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[9999] bg-[rgb(0_0_0/0.95)] flex items-center justify-center p-4"
             onClick={() => setShowLightbox(false)}
           >
             {/* Close button */}

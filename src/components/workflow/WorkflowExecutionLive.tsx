@@ -156,7 +156,7 @@ export function WorkflowExecutionLive({ state, onClose, orchestrationPlan }: Wor
       className="fixed inset-0 z-50 flex"
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-[rgb(0_0_0/0.6)] backdrop-blur-sm" />
 
       {/* Main Content */}
       <motion.div
@@ -242,7 +242,7 @@ export function WorkflowExecutionLive({ state, onClose, orchestrationPlan }: Wor
         </div>
 
         {/* Progress Bar */}
-        <div className="h-1 bg-black/30 flex-shrink-0">
+        <div className="h-1 bg-[rgb(0_0_0/0.3)] flex-shrink-0">
           <motion.div
             className={cn(
               'h-full',

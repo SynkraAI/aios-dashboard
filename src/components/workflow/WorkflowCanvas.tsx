@@ -256,7 +256,7 @@ export function WorkflowCanvas({
       </div>
 
       {/* Zoom hint */}
-      <div className="absolute bottom-2 md:bottom-4 right-2 md:right-4 bg-black/40 backdrop-blur-xl border border-white/10 rounded-lg px-2 md:px-3 py-1.5 md:py-2 hidden sm:block">
+      <div className="absolute bottom-2 md:bottom-4 right-2 md:right-4 bg-[rgb(0_0_0/0.4)] backdrop-blur-xl border border-white/10 rounded-lg px-2 md:px-3 py-1.5 md:py-2 hidden sm:block">
         <p className="text-[10px] text-white/50">
           <kbd className="px-1 py-0.5 rounded bg-white/10 text-white/70">⌘/Ctrl</kbd>
           {' + scroll para zoom · arraste para mover'}
@@ -384,7 +384,7 @@ const WorkflowNodeComponent = memo(function WorkflowNodeComponent({
         <div
           className={cn(
             'h-14 w-14 rounded-full flex items-center justify-center',
-            'bg-black/50 backdrop-blur-xl border transition-all',
+            'bg-[rgb(0_0_0/0.5)] backdrop-blur-xl border transition-all',
             node.type === 'start' && 'border-[var(--color-accent,#D1FF00)]/50 shadow-[0_0_20px_rgba(209,255,0,0.2)]',
             node.type === 'end' && 'border-[var(--color-accent,#D1FF00)]/30 shadow-[0_0_20px_rgba(209,255,0,0.1)]',
             node.type === 'checkpoint' && 'border-[var(--color-text-secondary,#858585)]/50 shadow-[0_0_20px_rgba(156,156,156,0.15)]',
@@ -430,7 +430,7 @@ const WorkflowNodeComponent = memo(function WorkflowNodeComponent({
     >
       <div
         className={cn(
-          'bg-black/50 backdrop-blur-xl rounded-xl p-3 border transition-all',
+          'bg-[rgb(0_0_0/0.5)] backdrop-blur-xl rounded-xl p-3 border transition-all',
           colors?.border || 'border-white/10',
           isSelected && 'ring-2 ring-offset-2 ring-offset-transparent ring-white',
           node.status === 'active' && colors?.glow
@@ -492,7 +492,7 @@ const WorkflowNodeComponent = memo(function WorkflowNodeComponent({
         <motion.div
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-2 bg-black/50 backdrop-blur-xl border border-white/10 rounded-lg px-2 py-1"
+          className="mt-2 bg-[rgb(0_0_0/0.5)] backdrop-blur-xl border border-white/10 rounded-lg px-2 py-1"
         >
           <p className="text-[10px] text-white/70 truncate">{node.currentAction}</p>
         </motion.div>

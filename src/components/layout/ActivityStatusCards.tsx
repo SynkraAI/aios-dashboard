@@ -16,7 +16,7 @@ export function StreamingStatus({ agentName }: { agentName: string }) {
         </div>
       </div>
       <div className="mt-3">
-        <div className="h-1.5 bg-black/20 rounded-full overflow-hidden">
+        <div className="h-1.5 bg-[rgb(0_0_0/0.2)] rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full"
             initial={{ width: '0%' }}

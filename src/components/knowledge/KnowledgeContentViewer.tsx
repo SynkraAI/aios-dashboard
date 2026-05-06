@@ -71,7 +71,7 @@ export function KnowledgeContentViewer({ filePath, onClose }: KnowledgeContentVi
         {isLoading ? (
           <div className="text-center py-8 text-tertiary text-sm">Carregando...</div>
         ) : fileContent?.content ? (
-          <pre className="text-sm whitespace-pre-wrap font-mono p-4 rounded-xl bg-black/20 text-secondary leading-relaxed">
+          <pre className="text-sm whitespace-pre-wrap font-mono p-4 rounded-xl bg-[rgb(0_0_0/0.2)] text-secondary leading-relaxed">
             {fileContent.content}
           </pre>
         ) : (

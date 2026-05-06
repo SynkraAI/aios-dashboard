@@ -125,7 +125,7 @@ export function WorkflowExecutionSidebar({
               <span className="text-white/60">Progresso geral</span>
               <span className="text-white font-semibold">{Math.round(progress)}%</span>
             </div>
-            <div className="h-2 rounded-full bg-black/30 overflow-hidden">
+            <div className="h-2 rounded-full bg-[rgb(0_0_0/0.3)] overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
                 initial={{ width: 0 }}
@@ -179,12 +179,11 @@ export function WorkflowExecutionSidebar({
                     transition={{ delay: index * 0.03 }}
                     onClick={() => setSelectedNodeId(step.id)}
                     className={cn(
-                      'w-full rounded-xl p-3 border-l-2 transition-all text-left hover:translate-x-1',
+                      'w-full rounded-xl p-3 border transition-all text-left hover:translate-x-1',
                       style.border,
                       `bg-gradient-to-r ${style.bg} to-transparent`,
                       isSelected && 'ring-1 ring-white/30'
                     )}
-                    style={{ border: '1px solid var(--glass-border-color-subtle)', borderLeftWidth: '2px' }}
                   >
                     <div className="flex items-start justify-between gap-2 mb-1">
                       <div className="flex items-center gap-2">

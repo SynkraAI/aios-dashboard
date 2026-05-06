@@ -195,7 +195,7 @@ export function AgentProfileModal({ agent, isOpen, onClose, onStartChat }: Agent
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-[rgb(0_0_0/0.6)] backdrop-blur-sm p-4"
           >
           {/* Modal */}
           <motion.div
@@ -526,7 +526,7 @@ function TabVoice({ agent }: { agent: AgentProfileAgent }) {
         <Section title="Frases de Abertura" icon={<VoiceIcon />}>
           <div className="space-y-2">
             {voiceDna.sentenceStarters.slice(0, 6).map((starter: string, i: number) => (
-              <div key={i} className="p-2 rounded-lg bg-white/5 border-l-2 border-[#0099FF]/50">
+              <div key={i} className="p-2 rounded-lg bg-white/5 border border-[#0099FF]/30">
                 <p className="text-sm text-white/70 italic">"{starter}..."</p>
               </div>
             ))}

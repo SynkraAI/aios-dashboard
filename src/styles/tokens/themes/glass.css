@@ -144,11 +144,12 @@ html[data-theme="glass"] .glass-scrollbar::-webkit-scrollbar-thumb:hover {
 }
 
 /* --- Modal/overlay backdrop --- */
-html[data-theme="glass"] .bg-black\/80 {
+/* CDM-UI-002: target arbitrary-value `bg-[rgb(0_0_0/0.X)]` utilities. */
+html[data-theme="glass"] [class*="rgb(0_0_0/0.8)"] {
   background-color: rgba(0, 0, 0, 0.60) !important;
   backdrop-filter: blur(10px) !important;
 }
-html[data-theme="glass"] .bg-black\/50 {
+html[data-theme="glass"] [class*="rgb(0_0_0/0.5)"] {
   background-color: rgba(0, 0, 0, 0.45) !important;
   backdrop-filter: blur(8px) !important;
 }

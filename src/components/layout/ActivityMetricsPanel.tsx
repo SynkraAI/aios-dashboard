@@ -161,7 +161,7 @@ export function MetricsPanel({ expandedSections, toggleSection }: MetricsPanelPr
                   {((stats.byStatus.completed ?? 0) / stats.total * 100).toFixed(1)}%
                 </span>
               </div>
-              <div className="h-2 rounded-full bg-black/30 overflow-hidden">
+              <div className="h-2 rounded-full bg-[rgb(0_0_0/0.3)] overflow-hidden">
                 <motion.div
                   className="h-full rounded-full bg-gradient-to-r from-green-500 to-emerald-400"
                   initial={{ width: 0 }}

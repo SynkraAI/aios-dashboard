@@ -27,7 +27,7 @@ export function WidgetCustomizer() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60]"
+              className="fixed inset-0 bg-[rgb(0_0_0/0.4)] backdrop-blur-sm z-[60]"
               onClick={() => setCustomizing(false)}
             />
             <motion.div

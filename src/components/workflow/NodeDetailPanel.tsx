@@ -153,7 +153,7 @@ export function NodeDetailPanel({
               <span className="text-white/50">Progresso Total</span>
               <span className="text-white font-semibold">{node.progress}%</span>
             </div>
-            <div className="h-2 rounded-full bg-black/30 overflow-hidden">
+            <div className="h-2 rounded-full bg-[rgb(0_0_0/0.3)] overflow-hidden">
               <motion.div
                 className={cn(
                   'h-full rounded-full bg-gradient-to-r',
@@ -200,11 +200,10 @@ export function NodeDetailPanel({
         {/* Current Action */}
         {node.currentAction && node.status === 'active' && (
           <div
-            className="rounded-xl p-3 border-l-2 border-orange-500"
+            className="rounded-xl p-3"
             style={{
               background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, transparent 100%)',
-              border: '1px solid rgba(249, 115, 22, 0.2)',
-              borderLeftWidth: '2px'
+              border: '1px solid rgba(249, 115, 22, 0.35)'
             }}
           >
             <div className="flex items-center gap-2 mb-1">
@@ -283,7 +282,7 @@ export function NodeDetailPanel({
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <div className="h-5 w-5 rounded-md bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                <div className="h-5 w-5 rounded-md bg-indigo-500 flex items-center justify-center">
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" />
                   </svg>
@@ -321,11 +320,10 @@ export function NodeDetailPanel({
         {/* Output/Result */}
         {node.output && (
           <div
-            className="rounded-xl p-3 border-l-2 border-green-500"
+            className="rounded-xl p-3"
             style={{
               background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, transparent 100%)',
-              border: '1px solid rgba(34, 197, 94, 0.2)',
-              borderLeftWidth: '2px'
+              border: '1px solid rgba(34, 197, 94, 0.35)'
             }}
           >
             <div className="flex items-center gap-2 mb-2">
@@ -343,11 +341,10 @@ export function NodeDetailPanel({
         {/* Waiting Message */}
         {node.status === 'waiting' && (
           <div
-            className="rounded-xl p-3 border-l-2 border-yellow-500"
+            className="rounded-xl p-3"
             style={{
               background: 'linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, transparent 100%)',
-              border: '1px solid rgba(234, 179, 8, 0.2)',
-              borderLeftWidth: '2px'
+              border: '1px solid rgba(234, 179, 8, 0.35)'
             }}
           >
             <div className="flex items-center gap-2">

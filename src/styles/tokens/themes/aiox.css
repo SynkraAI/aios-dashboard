@@ -481,11 +481,12 @@ html[data-theme="aiox"] .glass-scrollbar::-webkit-scrollbar-thumb:hover {
 }
 
 /* --- Modal/overlay backdrop --- */
-html[data-theme="aiox"] .bg-black\/80 {
+/* CDM-UI-002: target arbitrary-value `bg-[rgb(0_0_0/0.X)]` utilities. */
+html[data-theme="aiox"] [class*="rgb(0_0_0/0.8)"] {
   background-color: rgba(0, 0, 0, 0.75) !important;
   backdrop-filter: blur(8px) !important;
 }
-html[data-theme="aiox"] .bg-black\/50 {
+html[data-theme="aiox"] [class*="rgb(0_0_0/0.5)"] {
   background-color: rgba(0, 0, 0, 0.60) !important;
   backdrop-filter: blur(6px) !important;
 }
