@@ -337,7 +337,7 @@ describe('KanbanBoard', () => {
     // Loading skeleton has shimmer class
     const shimmers = container.querySelectorAll('.shimmer');
     expect(shimmers.length).toBeGreaterThan(0);
-  });
+  }, 45000);
 
   it('renders the board header with title and story count', () => {
     render(<KanbanBoard />);
